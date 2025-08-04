@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://fav.farm/🤖" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anthony's AI Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      html { font-family: 'Inter', sans-serif; }
+      
+      @keyframes move-orb-1 {
+        0% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(40vw, 20vh) scale(1.2); }
+        50% { transform: translate(10vw, 80vh) scale(0.8); }
+        75% { transform: translate(-30vw, 40vh) scale(1.1); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+      
+      @keyframes move-orb-2 {
+        0% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(-30vw, 30vh) scale(0.8); }
+        50% { transform: translate(20vw, 70vh) scale(1.2); }
+        75% { transform: translate(50vw, 10vh) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+      
+      @keyframes move-orb-3 {
+        0% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(20vw, -20vh) scale(1.1); }
+        50% { transform: translate(-40vw, 50vh) scale(0.7); }
+        75% { transform: translate(10vw, 30vh) scale(1.2); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+
+      .animate-orb-1 {
+        animation: move-orb-1 45s ease-in-out infinite;
+      }
+      .animate-orb-2 {
+        animation: move-orb-2 55s ease-in-out infinite;
+      }
+      .animate-orb-3 {
+        animation: move-orb-3 65s ease-in-out infinite;
+      }
+      /* Custom shadow and glass effect for the profile image */
+      .fat-glass-shadow {
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), 0 0 0 8px rgba(255,255,255,0.2);
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(12px) saturate(180%);
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.3);
+      }
+      /* Fade in from top */
+      @keyframes fade-in-down {
+        0% { opacity: 0; transform: translateY(-40px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-down {
+        animation: fade-in-down 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+      }
+      /* Fade in from bottom */
+      @keyframes fade-in-up {
+        0% { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 1s cubic-bezier(0.23, 1, 0.32, 1) both;
+      }
+      /* Staggered fade for nav chips */
+      .stagger-fade-up > * {
+        opacity: 0;
+        transform: translateY(40px);
+        animation: fade-in-up 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+      }
+      .stagger-fade-up > *:nth-child(1) { animation-delay: 0.1s; }
+      .stagger-fade-up > *:nth-child(2) { animation-delay: 0.2s; }
+      .stagger-fade-up > *:nth-child(3) { animation-delay: 0.3s; }
+      .stagger-fade-up > *:nth-child(4) { animation-delay: 0.4s; }
+      .stagger-fade-up > *:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.12.0",
+    "react/": "https://esm.sh/react@^19.1.1/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+/* Profile section animates to top and scales down */
+.profile-container {
+  transition: opacity 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+  opacity: 1;
+}
+.profile-container.fade-out {
+  opacity: 0;
+}
+
+/* Remove .wide-response-box if present */
+.wide-response-box { display: unset; max-width: unset; width: unset; margin: unset; border-radius: unset; box-shadow: unset; background: unset; padding: unset; }
+
+.fade-in-wide-delayed {
+  animation: fadeIn 0.7s cubic-bezier(0.4, 0.2, 0.2, 1) 0.1s both;
+}
+
+.input-chips-container {
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.input-chips-container.slide-down {
+  transform: translateY(220px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+} 

@@ -1,0 +1,5 @@
+{
+  "name": "AI Portfolio",
+  "description": "An interactive AI-powered portfolio for a frontend developer, allowing users to ask questions about skills, projects, and experience.",
+  "requestFramePermissions": []
+}
