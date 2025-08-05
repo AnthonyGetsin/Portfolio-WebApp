@@ -69,7 +69,7 @@ const AIResponse: React.FC<AIResponseProps> = ({ prompt, response, isLoading, er
   };
 
   return (
-    <div className="w-full max-w-2xl bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 md:p-8 text-left animate-fade-in">
+    <div className="glass-card-wide fade-in-wide-delayed">
       <div className="border-b border-gray-200 pb-4 mb-4">
         <p className="font-semibold text-gray-800">{prompt}</p>
       </div>
