@@ -152,13 +152,13 @@ const AIResponse: React.FC<AIResponseProps> = ({ prompt, response, isLoading, er
             {wantsResume && (
               <div className="my-4 flex flex-col items-center">
                 <img
-                  src={"/Resume.png"}
+                  src={"https://raw.githubusercontent.com/AnthonyGetsin/Portfolio-WebApp/e8d7e688098030ed40b93d77e92bceb75b3db095/Resume.png"}
                   alt="Resume"
                   className="w-full max-w-3xl rounded-2xl shadow-lg border border-gray-200"
                 />
                 <div className="mt-3 flex gap-3">
-                  <a href="/Resume.png" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-black text-white font-semibold hover:bg-gray-800">Open</a>
-                  <a href="/Resume.png" download className="px-4 py-2 rounded-full bg-white text-gray-800 border font-semibold hover:bg-gray-50">Download</a>
+                  <a href="https://raw.githubusercontent.com/AnthonyGetsin/Portfolio-WebApp/e8d7e688098030ed40b93d77e92bceb75b3db095/Resume.png" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-full bg-black text-white font-semibold hover:bg-gray-800">Open</a>
+                  <a href="https://raw.githubusercontent.com/AnthonyGetsin/Portfolio-WebApp/e8d7e688098030ed40b93d77e92bceb75b3db095/Resume.png" download className="px-4 py-2 rounded-full bg-white text-gray-800 border font-semibold hover:bg-gray-50">Download</a>
                 </div>
               </div>
             )}

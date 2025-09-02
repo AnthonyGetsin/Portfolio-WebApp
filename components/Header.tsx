@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       <p className="text-gray-600 text-lg mb-2 animate-fade-in-down">Hey, I'm Anthony 👋</p>
       <h1 className="text-5xl md:text-6xl font-bold tracking-tighter text-gray-900 mb-6 animate-fade-in-down">AI Portfolio</h1>
       <img
-        src="image.jpg"
+        src="https://raw.githubusercontent.com/AnthonyGetsin/Portfolio-WebApp/e8d7e688098030ed40b93d77e92bceb75b3db095/image.jpg"
         alt="Anthony's Memoji"
         className="w-40 h-40 rounded-full object-cover fat-glass-shadow"
       />
