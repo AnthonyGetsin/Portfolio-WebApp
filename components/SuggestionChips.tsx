@@ -9,7 +9,7 @@ interface SuggestionChipsProps {
 
 const iconMap: { [key: string]: React.FC<{ className?: string }> } = {
   Me: MeIcon,
-  Projects: ProjectsIcon,
+  Resume: MeIcon, // Using MeIcon for Resume
   Skills: SkillsIcon,
   Fun: FunIcon,
   Contact: ContactIcon,
@@ -17,7 +17,7 @@ const iconMap: { [key: string]: React.FC<{ className?: string }> } = {
 
 const iconColorMap: { [key: string]: string } = {
   Me: 'text-green-500',
-  Projects: 'text-indigo-500',
+  Resume: 'text-blue-500',
   Skills: 'text-purple-500',
   Fun: 'text-pink-500',
   Contact: 'text-yellow-500',
@@ -30,7 +30,7 @@ const SuggestionChip: React.FC<{ label: string; prompt: string; onClick: (prompt
   return (
     <button
       onClick={() => onClick(prompt)}
-      className="flex flex-col items-center justify-center space-y-2 w-28 h-28 bg-white/60 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-md hover:shadow-lg hover:border-gray-300 transition-all transform hover:-translate-y-1"
+      className="suggestion-chip flex flex-col items-center justify-center space-y-2 w-28 h-28 bg-white/60 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-md hover:shadow-lg hover:border-gray-300 transition-all transform hover:-translate-y-1"
     >
       <div className={`p-2 bg-white rounded-full shadow-inner`}>
         {Icon && <Icon className={`w-6 h-6 ${colorClass}`} />}

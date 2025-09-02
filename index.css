@@ -46,4 +46,245 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Enhanced Orb Animations */
+@keyframes orb-1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.25;
+  }
+  25% {
+    transform: translate(25vw, -20vh) rotate(90deg) scale(1.05);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(40vw, 5vh) rotate(180deg) scale(0.95);
+    opacity: 0.25;
+  }
+  75% {
+    transform: translate(20vw, 30vh) rotate(270deg) scale(1.02);
+    opacity: 0.28;
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg) scale(1);
+    opacity: 0.25;
+  }
+}
+
+@keyframes orb-2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.25;
+  }
+  20% {
+    transform: translate(-30vw, -25vh) rotate(-72deg) scale(1.08);
+    opacity: 0.3;
+  }
+  40% {
+    transform: translate(-45vw, 0vh) rotate(-144deg) scale(0.92);
+    opacity: 0.25;
+  }
+  60% {
+    transform: translate(-25vw, 35vh) rotate(-216deg) scale(1.05);
+    opacity: 0.28;
+  }
+  80% {
+    transform: translate(5vw, 20vh) rotate(-288deg) scale(0.98);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(0, 0) rotate(-360deg) scale(1);
+    opacity: 0.25;
+  }
+}
+
+@keyframes orb-3 {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 0.2;
+  }
+  33% {
+    transform: translate(35vw, -30vh) rotate(120deg) scale(1.1);
+    opacity: 0.25;
+  }
+  66% {
+    transform: translate(50vw, 20vh) rotate(240deg) scale(0.9);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg) scale(1);
+    opacity: 0.2;
+  }
+}
+
+/* Apply the animations to the orbs */
+.animate-orb-1 {
+  animation: orb-1 40s linear infinite;
+}
+
+.animate-orb-2 {
+  animation: orb-2 50s linear infinite;
+}
+
+.animate-orb-3 {
+  animation: orb-3 60s linear infinite;
+}
+
+/* Ensure orbs stay within viewport bounds */
+.orb-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  will-change: transform;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  mix-blend-mode: screen;
+  box-shadow: 
+    0 0 60px rgba(255, 255, 255, 0.1),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+/* Subtle hover effect for orbs */
+.orb:hover {
+  filter: blur(45px);
+  box-shadow: 
+    0 0 80px rgba(255, 255, 255, 0.15),
+    inset 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+/* Ensure smooth scrolling and prevent layout shifts */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Enhanced UI elements */
+.suggestion-chip {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.suggestion-chip:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Personal touch for the main container */
+.profile-container {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-container:hover {
+  transform: scale(1.01);
+}
+
+/* Enhanced input styling */
+.chat-input {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.chat-input:focus {
+  border-color: rgba(147, 51, 234, 0.3);
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+}
+
+/* Smooth fade transitions */
+.fade-in-wide-delayed {
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+/* Enhanced glass card effect */
+.glass-card-wide {
+  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.glass-card-wide:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Background name with transparent text */
+.background-name {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+/* Ensure text scales without clipping */
+@media (max-width: 768px) {
+  .background-name { 
+    letter-spacing: -0.01em;
+    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Conversation styling */
+.conversation-container {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.conversation-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.conversation-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.conversation-container::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+}
+
+.conversation-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
+}
+
+/* Enhanced message styling */
+.message {
+  transition: all 0.3s ease;
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Resume image styling */
+.resume-image {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.resume-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 } 

@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { getAIResponseStream } from './services/geminiService';
 import { SUGGESTION_CHIPS } from './constants';
 import Header from './components/Header';
@@ -8,59 +8,98 @@ import SuggestionChips from './components/SuggestionChips';
 import AIResponse from './components/AIResponse';
 import { GithubIcon } from './components/icons';
 
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}
+
 const App: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState('');
-  const [aiResponseBuffer, setAiResponseBuffer] = useState(''); // NEW
+  const [aiResponseBuffer, setAiResponseBuffer] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [currentPrompt, setCurrentPrompt] = useState('');
-  const [showChatResponse, setShowChatResponse] = useState(false); // NEW
-  const [profileFaded, setProfileFaded] = useState(false); // NEW
+  const [showChatResponse, setShowChatResponse] = useState(false);
+  const [profileFaded, setProfileFaded] = useState(false);
+  const [isStuck, setIsStuck] = useState(false);
+  const [conversation, setConversation] = useState<Message[]>([]);
+  const chipsRef = useRef<HTMLDivElement>(null);
 
   const resetState = () => {
     setAiResponse('');
-    setAiResponseBuffer(''); // NEW
+    setAiResponseBuffer('');
     setCurrentPrompt('');
     setInputValue('');
     setError(null);
-    setShowChatResponse(false); // NEW
+    setShowChatResponse(false);
+    setConversation([]);
   };
 
   useEffect(() => {
     if (showChatResponse) {
-      const timeout = setTimeout(() => setProfileFaded(true), 300); // 300ms fade
+      const timeout = setTimeout(() => setProfileFaded(true), 300);
       return () => clearTimeout(timeout);
     } else {
       setProfileFaded(false);
     }
   }, [showChatResponse]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!chipsRef.current) return;
+      const rect = chipsRef.current.getBoundingClientRect();
+      setIsStuck(rect.top <= 24);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleSubmit = useCallback(async (prompt: string) => {
     if (isLoading) return;
-    resetState();
+    
+    // Add user message to conversation
+    const userMessage: Message = {
+      role: 'user',
+      content: prompt,
+      timestamp: new Date()
+    };
+    
+    setConversation(prev => [...prev, userMessage]);
     setIsLoading(true);
     setCurrentPrompt(prompt);
-    setShowChatResponse(true); // NEW: trigger transition
-    setInputValue(''); // NEW: clear input after submit
+    setShowChatResponse(true);
+    setInputValue('');
+    setAiResponse('');
+    setAiResponseBuffer('');
+    
     let buffer = '';
     try {
-      const stream = getAIResponseStream(prompt);
+      const stream = getAIResponseStream(prompt, conversation);
       for await (const chunk of stream) {
         buffer += chunk;
-        setAiResponseBuffer(buffer); // For possible future use (e.g., streaming loader)
+        setAiResponseBuffer(buffer);
       }
-      setAiResponse(buffer); // Only set after fully received
+      setAiResponse(buffer);
+      
+      // Add AI response to conversation
+      const aiMessage: Message = {
+        role: 'assistant',
+        content: buffer,
+        timestamp: new Date()
+      };
+      setConversation(prev => [...prev, aiMessage]);
     } catch (err) {
       console.error(err);
       setError('Sorry, something went wrong. Please try again.');
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading]);
+  }, [isLoading, conversation]);
 
   const handleSuggestionClick = (prompt: string) => {
-    setInputValue(''); // NEW: clear input
+    setInputValue('');
     handleSubmit(prompt);
   };
 
@@ -68,14 +107,14 @@ const App: React.FC = () => {
     <div className={`bg-white text-gray-800 font-sans min-h-screen w-full flex flex-col items-center justify-center p-4 relative overflow-hidden ${showChatResponse ? 'show-chat-response' : ''}`}>
       
       {/* Background Orbs */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-        <div className="absolute top-[10%] left-[10%] w-[80vmin] h-[80vmin] bg-gradient-to-tr from-purple-400 via-pink-500 to-red-500 rounded-full opacity-30 blur-3xl animate-orb-1"></div>
-        <div className="absolute top-[50%] left-[60%] w-[60vmin] h-[60vmin] bg-gradient-to-tr from-blue-400 via-teal-300 to-green-400 rounded-full opacity-30 blur-3xl animate-orb-2"></div>
-        <div className="absolute top-[80%] left-[20%] w-[40vmin] h-[40vmin] bg-gradient-to-tr from-yellow-300 via-orange-400 to-red-400 rounded-full opacity-20 blur-3xl animate-orb-3"></div>
+      <div className="orb-container">
+        <div className="orb animate-orb-1 top-[10%] left-[15%] w-[65vmin] h-[65vmin] bg-gradient-to-tr from-purple-400 via-pink-500 to-red-500 opacity-25"></div>
+        <div className="orb animate-orb-2 top-[20%] left-[70%] w-[50vmin] h-[50vmin] bg-gradient-to-tr from-blue-400 via-teal-300 to-green-400 opacity-25"></div>
+        <div className="orb animate-orb-3 top-[75%] left-[10%] w-[40vmin] h-[40vmin] bg-gradient-to-tr from-yellow-300 via-orange-400 to-red-400 opacity-20"></div>
       </div>
 
       {/* Background Text */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[20vw] md:text-[15rem] font-extrabold text-gray-100/80 tracking-widest pointer-events-none z-0 whitespace-nowrap">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[16vw] md:text-[12rem] font-extrabold tracking-tight pointer-events-none z-0 whitespace-nowrap background-name">
         Tony Getsin
       </div>
 
@@ -90,10 +129,10 @@ const App: React.FC = () => {
       </div>
 
       <div className="absolute top-5 right-5 z-10">
-        <a href="https://github.com/getsin/ai-portfolio" target="_blank" rel="noopener noreferrer" className="bg-black text-white px-4 py-2 rounded-full shadow-lg flex items-center space-x-2 transition-transform hover:scale-105">
+        <a href="https://github.com/AnthonyGetsin" target="_blank" rel="noopener noreferrer" className="bg-black text-white px-4 py-2 rounded-full shadow-lg flex items-center space-x-2 transition-transform hover:scale-105 hover:bg-gray-800">
           <GithubIcon className="w-5 h-5" />
-          <span className="font-semibold text-sm">Star</span>
-          <span className="bg-gray-700 text-xs font-bold px-2 py-0.5 rounded-full">180</span>
+          <span className="font-semibold text-sm">GitHub</span>
+          <span className="bg-gray-700 text-xs font-bold px-2 py-0.5 rounded-full">@AnthonyGetsin</span>
         </a>
       </div>
 
@@ -116,12 +155,14 @@ const App: React.FC = () => {
                 prompt={currentPrompt}
                 onReset={resetState}
                 error={error}
-                limitToOneParagraph={true}
+                limitToOneParagraph={false}
               />
             )}
           </div>
         )}
-        <div className={`input-chips-container w-full flex flex-col items-center transition-transform duration-700 ${showChatResponse ? 'slide-down' : ''}`}>
+        <div
+          className={`input-chips-container w-full flex flex-col items-center transition-transform duration-700${showChatResponse ? ' fade-out' : ''}`}
+        >
           <ChatInput 
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

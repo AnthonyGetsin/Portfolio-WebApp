@@ -26,7 +26,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ value, onChange, onSubmit, isLoad
           onKeyPress={handleKeyPress}
           placeholder="Ask me anything..."
           disabled={isLoading}
-          className="w-full py-4 pl-6 pr-16 text-md bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none transition-shadow"
+          className="chat-input w-full py-4 pl-6 pr-16 text-md bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full shadow-md focus:ring-2 focus:ring-blue-400 focus:outline-none transition-shadow"
         />
         <button
           onClick={onSubmit}
